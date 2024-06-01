@@ -37,8 +37,9 @@ public class CompoundsMain {
 
     public CompoundsMain() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ItemRegistry.register();
+        REGISTRATE.registerEventListeners(FMLJavaModLoadingContext.get().getModEventBus());
         TAB_REGISTER.register(modEventBus);
+        ItemRegistry.register();
         MinecraftForge.EVENT_BUS.register(this);
     }
 }

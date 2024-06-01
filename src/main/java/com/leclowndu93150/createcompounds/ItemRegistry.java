@@ -7,6 +7,7 @@ import com.leclowndu93150.createcompounds.compounds.ShadowSteelItem;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.item.Rarity;
+import net.minecraftforge.eventbus.api.IEventBus;
 
 import static com.leclowndu93150.createcompounds.CompoundsMain.REGISTRATE;
 
@@ -30,6 +31,7 @@ public class ItemRegistry {
                     .register();
 
 
-    public static void register() {}
+    public static void register() {
+    }
 
 }

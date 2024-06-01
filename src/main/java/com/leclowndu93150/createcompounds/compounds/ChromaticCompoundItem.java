@@ -1,5 +1,6 @@
 package com.leclowndu93150.createcompounds.compounds;
 
+import com.leclowndu93150.createcompounds.ItemRegistry;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.simibubi.create.AllItems;
@@ -9,8 +10,6 @@ import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.Color;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.infrastructure.config.AllConfigs;
-import com.simibubi.create.infrastructure.config.CRecipes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -51,13 +50,13 @@ public class ChromaticCompoundItem extends Item {
 
 	@Override
 	public int getBarWidth(ItemStack stack) {
-		return Math.round(13.0F * getLight(stack) / AllConfigs.server().recipes.lightSourceCountForRefinedRadiance.get());
+		return Math.round(13.0F * getLight(stack) / 10);
 	}
 
 	@Override
 	public int getBarColor(ItemStack stack) {
 		return Color.mixColors(0x413c69, 0xFFFFFF,
-			getLight(stack) / (float) AllConfigs.server().recipes.lightSourceCountForRefinedRadiance.get());
+			getLight(stack) / (float) 10);
 	}
 
 	@Override
@@ -71,11 +70,10 @@ public class ChromaticCompoundItem extends Item {
 		CompoundTag itemData = entity.getItem()
 			.getOrCreateTag();
 		Vec3 positionVec = entity.position();
-		CRecipes config = AllConfigs.server().recipes;
 
 		if (world.isClientSide) {
 			int light = itemData.getInt("CollectingLight");
-			if (world.random.nextInt(config.lightSourceCountForRefinedRadiance.get() + 20) < light) {
+			if (world.random.nextInt(10 + 20) < light) {
 				Vec3 start = VecHelper.offsetRandomly(positionVec, world.random, 3);
 				Vec3 motion = positionVec.subtract(start)
 					.normalize()
@@ -91,19 +89,17 @@ public class ChromaticCompoundItem extends Item {
 		CompoundTag data = entity.getPersistentData();
 
 		// Convert to Shadow steel if in void
-		if (y < minHeight && y - yMotion < -10 + minHeight && config.enableShadowSteelRecipe.get()) {
-			ItemStack newStack = AllItems.SHADOW_STEEL.asStack();
+		if (y < minHeight && y - yMotion < -10 + minHeight) {
+			ItemStack newStack = ItemRegistry.SHADOW_STEEL.asStack();
 			newStack.setCount(stack.getCount());
 			data.putBoolean("JustCreated", true);
 			entity.setItem(newStack);
 		}
 
-		if (!config.enableRefinedRadianceRecipe.get())
-			return false;
 
 		// Convert to Refined Radiance if eaten enough light sources
-		if (itemData.getInt("CollectingLight") >= config.lightSourceCountForRefinedRadiance.get()) {
-			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
+		if (itemData.getInt("CollectingLight") >= 10) {
+			ItemStack newStack = ItemRegistry.REFINED_RADIANCE.asStack();
 			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
 			newEntity.setDeltaMovement(entity.getDeltaMovement());
 			newEntity.getPersistentData()
@@ -148,7 +144,7 @@ public class ChromaticCompoundItem extends Item {
 		}
 
 		if (isOverBeacon) {
-			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
+			ItemStack newStack = ItemRegistry.REFINED_RADIANCE.asStack();
 			newStack.setCount(stack.getCount());
 			data.putBoolean("JustCreated", true);
 			entity.setItem(newStack);
