@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.leclowndu93150.createcompounds.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "createcompounds.refmap.json",
+  "mixins": [
+    "MysteriousItemConversionCategoryMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
