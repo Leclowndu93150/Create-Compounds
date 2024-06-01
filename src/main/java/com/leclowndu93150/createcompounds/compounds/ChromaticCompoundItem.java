@@ -43,6 +43,8 @@ public class ChromaticCompoundItem extends Item {
 			.getInt("CollectingLight");
 	}
 
+	int lightRequirement = 1;
+
 	@Override
 	public boolean isBarVisible(ItemStack stack) {
 		return getLight(stack) > 0;
@@ -50,13 +52,13 @@ public class ChromaticCompoundItem extends Item {
 
 	@Override
 	public int getBarWidth(ItemStack stack) {
-		return Math.round(13.0F * getLight(stack) / 10);
+		return Math.round(13.0F * getLight(stack) / lightRequirement);
 	}
 
 	@Override
 	public int getBarColor(ItemStack stack) {
 		return Color.mixColors(0x413c69, 0xFFFFFF,
-			getLight(stack) / (float) 10);
+			getLight(stack) / (float) lightRequirement);
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class ChromaticCompoundItem extends Item {
 
 		if (world.isClientSide) {
 			int light = itemData.getInt("CollectingLight");
-			if (world.random.nextInt(10 + 20) < light) {
+			if (world.random.nextInt(lightRequirement + 20) < light) {
 				Vec3 start = VecHelper.offsetRandomly(positionVec, world.random, 3);
 				Vec3 motion = positionVec.subtract(start)
 					.normalize()
@@ -98,7 +100,7 @@ public class ChromaticCompoundItem extends Item {
 
 
 		// Convert to Refined Radiance if eaten enough light sources
-		if (itemData.getInt("CollectingLight") >= 10) {
+		if (itemData.getInt("CollectingLight") >= lightRequirement) {
 			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
 			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
 			newEntity.setDeltaMovement(entity.getDeltaMovement());
