@@ -25,7 +25,7 @@
   ],
   "results": [
     {
-      "item": "createcompounds:chromatic_compound"
+      "item": "create:chromatic_compound"
     }
   ],
   "heatRequirement": "superheated"

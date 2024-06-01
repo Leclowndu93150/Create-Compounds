@@ -90,7 +90,7 @@ public class ChromaticCompoundItem extends Item {
 
 		// Convert to Shadow steel if in void
 		if (y < minHeight && y - yMotion < -10 + minHeight) {
-			ItemStack newStack = ItemRegistry.SHADOW_STEEL.asStack();
+			ItemStack newStack = AllItems.SHADOW_STEEL.asStack();
 			newStack.setCount(stack.getCount());
 			data.putBoolean("JustCreated", true);
 			entity.setItem(newStack);
@@ -99,7 +99,7 @@ public class ChromaticCompoundItem extends Item {
 
 		// Convert to Refined Radiance if eaten enough light sources
 		if (itemData.getInt("CollectingLight") >= 10) {
-			ItemStack newStack = ItemRegistry.REFINED_RADIANCE.asStack();
+			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
 			ItemEntity newEntity = new ItemEntity(world, entity.getX(), entity.getY(), entity.getZ(), newStack);
 			newEntity.setDeltaMovement(entity.getDeltaMovement());
 			newEntity.getPersistentData()
@@ -144,7 +144,7 @@ public class ChromaticCompoundItem extends Item {
 		}
 
 		if (isOverBeacon) {
-			ItemStack newStack = ItemRegistry.REFINED_RADIANCE.asStack();
+			ItemStack newStack = AllItems.REFINED_RADIANCE.asStack();
 			newStack.setCount(stack.getCount());
 			data.putBoolean("JustCreated", true);
 			entity.setItem(newStack);

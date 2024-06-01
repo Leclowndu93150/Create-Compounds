@@ -1,6 +1,9 @@
 package com.leclowndu93150.createcompounds;
 
 import com.simibubi.create.AllCreativeModeTabs;
+import com.simibubi.create.AllItems;
+import com.simibubi.create.compat.jei.ConversionRecipe;
+import com.simibubi.create.compat.jei.category.MysteriousItemConversionCategory;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -27,19 +30,18 @@ public class CompoundsMain {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("Create: Compounds"))
                     .withTabsBefore(AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey())
-                    .icon(ItemRegistry.REFINED_RADIANCE::asStack)
+                    .icon(AllItems.REFINED_RADIANCE::asStack)
                     .displayItems((parameters, output) -> {
-                        output.accept(ItemRegistry.CHROMATIC_COMPOUND.get());
-                        output.accept(ItemRegistry.REFINED_RADIANCE.get());
-                        output.accept(ItemRegistry.SHADOW_STEEL.get());
+                        output.accept(AllItems.CHROMATIC_COMPOUND.get());
+                        output.accept(AllItems.REFINED_RADIANCE.get());
+                        output.accept(AllItems.SHADOW_STEEL.get());
                     })
                     .build());
 
     public CompoundsMain() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        REGISTRATE.registerEventListeners(FMLJavaModLoadingContext.get().getModEventBus());
+        //REGISTRATE.registerEventListeners(FMLJavaModLoadingContext.get().getModEventBus());
         TAB_REGISTER.register(modEventBus);
-        ItemRegistry.register();
         MinecraftForge.EVENT_BUS.register(this);
     }
 }
